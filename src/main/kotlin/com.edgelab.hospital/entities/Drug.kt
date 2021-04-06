@@ -10,7 +10,7 @@ enum class Drug(val drugCode: String) {
 
   companion object {
     fun parseDrugs(input: String): List<Drug> {
-      return input.split(",").map { values().first { v -> v.drugCode == it } }
+      return input.split(",").filter { !it.isEmpty() }.map { values().first { v -> v.drugCode == it } }
     }
   }
 }

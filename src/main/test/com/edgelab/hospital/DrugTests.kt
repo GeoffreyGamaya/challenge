@@ -10,7 +10,7 @@ class DrugTests {
 
   @Test
   fun emptyDrug() {
-    assertEquals(arrayOf<String>(), Drug.parseDrugs(""))
+    assertEquals(listOf<String>(), Drug.parseDrugs(""))
   }
 
   @Test

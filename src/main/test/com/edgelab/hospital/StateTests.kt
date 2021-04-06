@@ -10,7 +10,7 @@ class StateTests {
 
   @Test
   fun emptyState() {
-    assertEquals(arrayOf<String>(), parseStates(""))
+    assertEquals(listOf<String>(), parseStates(""))
   }
 
   @Test
