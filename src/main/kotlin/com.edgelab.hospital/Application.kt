@@ -6,6 +6,9 @@ import com.edgelab.hospital.entities.Patient
 import com.edgelab.hospital.entities.State
 
 fun main(args: Array<String>) {
-  val hospital = Hospital(State.parseStates(args[0]).map { Patient(it) })
-  println(hospital.runSimulation(Drug.parseDrugs(args[1])))
+  if (args.size != 2) return
+  val patients = State.parseStates(args[0]).map { Patient(it) }
+  val hospital = Hospital(patients)
+  val drugs = Drug.parseDrugs(args[1])
+  println(hospital.runSimulation(drugs))
 }

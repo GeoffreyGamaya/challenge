@@ -25,4 +25,5 @@ class Patient(var state: State) {
         ?.also { state = it; isTreated = true }
     isTreated = false
   }
+
 }

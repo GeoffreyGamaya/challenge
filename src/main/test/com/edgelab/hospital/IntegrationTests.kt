@@ -19,20 +19,8 @@ class IntegrationTests {
   }
 
   @Test
-  fun noArgument() {
-    main(arrayOf())
-    Assertions.assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replace("([\\r\\n])".toRegex(), ""))
-  }
-
-  @Test
   fun emptyArguments() {
     main(arrayOf("", ""))
-    Assertions.assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replace("([\\r\\n])".toRegex(), ""))
-  }
-
-  @Test
-  fun noneSense() {
-    main(arrayOf("foo", "bar"))
     Assertions.assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replace("([\\r\\n])".toRegex(), ""))
   }
 
@@ -44,7 +32,7 @@ class IntegrationTests {
 
   @Test
   fun onePatient() {
-    main(arrayOf("D"))
+    main(arrayOf("D", ""))
     Assertions.assertEquals("F:0,H:0,D:0,T:0,X:1", BAOS.toString().replace("([\\r\\n])".toRegex(), ""))
   }
 

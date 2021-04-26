@@ -4,9 +4,10 @@ import com.edgelab.hospital.entities.Drug.*
 import com.edgelab.hospital.entities.Effect
 import com.edgelab.hospital.entities.Patient
 import com.edgelab.hospital.entities.State.*
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import java.util.*
 
 internal class PatientTests {
@@ -48,8 +49,8 @@ internal class PatientTests {
 
   @Test
   fun cureDeathRandomly() {
-    val randomMock = Mockito.mock(Random::class.java)
-    Mockito.`when`(randomMock.nextDouble()).thenReturn(0.0000011).thenReturn(0.0000010)
+    val randomMock = mockk<Random>()
+    every { randomMock.nextDouble() }.returnsMany(listOf(0.0000011, 0.0000010))
     Effect.random = randomMock
     val patient = Patient(DEAD)
     patient.treat(listOf(ANTIBIOTIC))
