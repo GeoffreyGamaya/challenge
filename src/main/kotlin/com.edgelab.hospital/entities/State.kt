@@ -10,7 +10,7 @@ enum class State(val statusCode: String) {
 
   companion object {
     fun parseStates(input: String): List<State> {
-      return input.split(",").filter { !it.isEmpty() }.map { values().first { v -> v.statusCode == it } }
+      return input.split(",").filter { it.isNotEmpty() }.map { values().first { v -> v.statusCode == it } }
     }
   }
 }
