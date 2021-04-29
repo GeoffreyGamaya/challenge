@@ -2,41 +2,40 @@ package com.edgelab.hospital
 
 import com.edgelab.hospital.entities.Drug
 import com.edgelab.hospital.entities.Drug.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DrugTests {
 
   @Test
   fun emptyDrug() {
-    assertEquals(listOf<String>(), Drug.parseDrugs(""))
+    assertThat(Drug.of("")).isEqualTo(listOf<String>())
   }
 
   @Test
   fun parseAspirin() {
-    assertEquals(ASPIRIN, Drug.parseDrugs("As")[0])
+    assertThat(Drug.of("As")).containsExactly(ASPIRIN)
   }
 
   @Test
   fun parseAntibiotic() {
-    assertEquals(ANTIBIOTIC, Drug.parseDrugs("An")[0])
+    assertThat(Drug.of("An")).containsExactly(ANTIBIOTIC)
   }
 
   @Test
   fun parseInsulin() {
-    assertEquals(INSULIN, Drug.parseDrugs("I")[0])
+    assertThat(Drug.of("I")).containsExactly(INSULIN)
   }
 
   @Test
   fun parseParacetamol() {
-    assertEquals(PARACETAMOL, Drug.parseDrugs("P")[0])
+    assertThat(Drug.of("P")).containsExactly(PARACETAMOL)
   }
 
   @Test
   fun parseMultipleDrugs() {
-    assertEquals(listOf(ASPIRIN, ANTIBIOTIC, INSULIN, PARACETAMOL), Drug.parseDrugs("As,An,I,P"))
-    assertNotEquals(listOf(ASPIRIN, ANTIBIOTIC, INSULIN, PARACETAMOL), Drug.parseDrugs("An,As,I,P"))
+    assertThat(Drug.of("As,An,I,P")).containsExactlyInAnyOrderElementsOf(listOf(ASPIRIN, ANTIBIOTIC, INSULIN, PARACETAMOL))
+    assertThat(Drug.of("An,As,I,P")).containsExactlyInAnyOrderElementsOf(listOf(ASPIRIN, ANTIBIOTIC, INSULIN, PARACETAMOL))
   }
   
 }

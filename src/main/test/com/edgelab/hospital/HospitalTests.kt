@@ -6,7 +6,7 @@ import com.edgelab.hospital.entities.Patient
 import com.edgelab.hospital.entities.State.*
 import io.mockk.every
 import io.mockk.spyk
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class HospitalTests {
@@ -23,17 +23,15 @@ class HospitalTests {
 
     val hospital = Hospital(listOf(patient1, patient2, patient3))
     val results = hospital.runSimulation(listOf(ANTIBIOTIC, ASPIRIN))
-    Assertions.assertEquals("F:1,H:1,D:0,T:1,X:0", results)
+    assertThat(results).isEqualTo("F:1,H:1,D:0,T:1,X:0")
   }
 
   @Test
   fun multiSimulations() {
     val patients = listOf(Patient(FEVER), Patient(DIABETES), Patient(TUBERCULOSIS))
     val hospital = Hospital(patients)
-    val results1 = hospital.runSimulation(listOf(PARACETAMOL, INSULIN))
-    Assertions.assertEquals("F:0,H:1,D:1,T:1,X:0", results1)
-    val results2 = hospital.runSimulation(listOf(ANTIBIOTIC, ASPIRIN))
-    Assertions.assertEquals("F:0,H:2,D:0,T:0,X:1", results2)
+    assertThat(hospital.runSimulation(listOf(PARACETAMOL, INSULIN))).isEqualTo("F:0,H:1,D:1,T:1,X:0")
+    assertThat(hospital.runSimulation(listOf(ANTIBIOTIC, ASPIRIN))).isEqualTo("F:0,H:2,D:0,T:0,X:1")
   }
 
 }

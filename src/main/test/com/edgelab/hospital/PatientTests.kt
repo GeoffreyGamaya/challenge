@@ -6,7 +6,7 @@ import com.edgelab.hospital.entities.Patient
 import com.edgelab.hospital.entities.State.*
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -16,35 +16,35 @@ internal class PatientTests {
   fun medicineNoEffect() {
     val patient = Patient(TUBERCULOSIS)
     patient.treat(listOf(INSULIN))
-    Assertions.assertEquals(TUBERCULOSIS, patient.state)
+    assertThat(patient.state).isEqualTo(TUBERCULOSIS)
   }
 
   @Test
   fun cureFeverWithAspirin() {
     val patient = Patient(FEVER)
     patient.treat(listOf(ASPIRIN))
-    Assertions.assertEquals(HEALTHY, patient.state)
+    assertThat(patient.state).isEqualTo(HEALTHY)
   }
 
   @Test
   fun cureFeverWithParacetamol() {
     val patient = Patient(FEVER)
     patient.treat(listOf(PARACETAMOL))
-    Assertions.assertEquals(HEALTHY, patient.state)
+    assertThat(patient.state).isEqualTo(HEALTHY)
   }
 
   @Test
   fun cureTuberculosis() {
     val patient = Patient(TUBERCULOSIS)
     patient.treat(listOf(ANTIBIOTIC))
-    Assertions.assertEquals(HEALTHY, patient.state)
+    assertThat(patient.state).isEqualTo(HEALTHY)
   }
 
   @Test
   fun cureDiabetes() {
     val patient = Patient(DIABETES)
     patient.treat(listOf(INSULIN))
-    Assertions.assertEquals(DIABETES, patient.state)
+    assertThat(patient.state).isEqualTo(DIABETES)
   }
 
   @Test
@@ -54,50 +54,51 @@ internal class PatientTests {
     Effect.random = randomMock
     val patient = Patient(DEAD)
     patient.treat(listOf(ANTIBIOTIC))
-    Assertions.assertEquals(DEAD, patient.state)
+    assertThat(patient.state).isEqualTo(DEAD)
     patient.treat(listOf(ANTIBIOTIC))
-    Assertions.assertEquals(HEALTHY, patient.state)
+    assertThat(patient.state).isEqualTo(HEALTHY)
   }
 
   @Test
   fun diabetesDiesWithoutInsulin() {
     val patient = Patient(DIABETES)
     patient.treat(listOf(ANTIBIOTIC))
-    Assertions.assertEquals(DEAD, patient.state)
+    assertThat(patient.state).isEqualTo(DEAD)
   }
 
   @Test
   fun diabetesSurvivesWithInsulin() {
     val patient = Patient(DIABETES)
     patient.treat(listOf(INSULIN))
-    Assertions.assertEquals(DIABETES, patient.state)
+    assertThat(patient.state).isEqualTo(DIABETES)
   }
 
   @Test
   fun mixInsulinWithAntibiotic() {
     val patient = Patient(HEALTHY)
-    patient.treat(Arrays.asList(INSULIN, ANTIBIOTIC))
-    Assertions.assertEquals(FEVER, patient.state)
+    patient.treat(listOf(INSULIN, ANTIBIOTIC))
+    assertThat(patient.state).isEqualTo(FEVER)
   }
 
   @Test
   fun mixParacetamolWithAspirin() {
     val patient = Patient(HEALTHY)
-    patient.treat(Arrays.asList(PARACETAMOL, ASPIRIN))
-    Assertions.assertEquals(DEAD, patient.state)
+    patient.treat(listOf(PARACETAMOL, ASPIRIN))
+    assertThat(patient.state).isEqualTo(DEAD)
   }
 
   @Test
   fun stateChangesOnlyOnce() {
     val patient = Patient(HEALTHY)
-    patient.treat(Arrays.asList(INSULIN, ANTIBIOTIC, ASPIRIN))
-    Assertions.assertEquals(FEVER, patient.state)
+    patient.treat(listOf(INSULIN, ANTIBIOTIC, ASPIRIN))
+    assertThat(patient.state).isEqualTo(FEVER)
   }
 
   @Test
-  fun DeathTakesPrecedence() {
+  fun deathTakesPrecedence() {
     val patient = Patient(FEVER)
-    patient.treat(Arrays.asList(PARACETAMOL, ASPIRIN))
-    Assertions.assertEquals(DEAD, patient.state)
+    patient.treat(listOf(PARACETAMOL, ASPIRIN))
+    assertThat(patient.state).isEqualTo(DEAD)
   }
+
 }

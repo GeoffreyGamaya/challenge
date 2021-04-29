@@ -1,41 +1,40 @@
 package com.edgelab.hospital
 
 import com.edgelab.hospital.entities.State.*
-import com.edgelab.hospital.entities.State.Companion.parseStates
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import com.edgelab.hospital.entities.State.Companion.of
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class StateTests {
 
   @Test
   fun emptyState() {
-    assertEquals(listOf<String>(), parseStates(""))
+    assertThat(of("")).isEqualTo(listOf<String>())
   }
 
   @Test
   fun parseFever() {
-    assertEquals(FEVER, parseStates("F")[0])
+    assertThat(of("F")).containsExactly(FEVER)
   }
 
   @Test
   fun parseHealthy() {
-    assertEquals(HEALTHY, parseStates("H")[0])
+    assertThat(of("H")).containsExactly(HEALTHY)
   }
 
   @Test
   fun parseDiabetes() {
-    assertEquals(DIABETES, parseStates("D")[0])
+    assertThat(of("D")).containsExactly(DIABETES)
   }
 
   @Test
   fun parseTuberculosis() {
-    assertEquals(TUBERCULOSIS, parseStates("T")[0])
+    assertThat(of("T")).containsExactly(TUBERCULOSIS)
   }
 
   @Test
   fun parseMultipleStates() {
-    assertEquals(listOf(FEVER, HEALTHY, DIABETES, TUBERCULOSIS, DEAD), parseStates("F,H,D,T,X"))
-    assertNotEquals(listOf(FEVER, HEALTHY, DIABETES, TUBERCULOSIS, DEAD), parseStates("H,F,D,T,X"))
+    assertThat(of("F,H,D,T,X")).containsExactlyInAnyOrderElementsOf(listOf(FEVER, HEALTHY, DIABETES, TUBERCULOSIS, DEAD))
+    assertThat(of("H,F,D,T,X")).containsExactlyInAnyOrderElementsOf(listOf(FEVER, HEALTHY, DIABETES, TUBERCULOSIS, DEAD))
   }
 }

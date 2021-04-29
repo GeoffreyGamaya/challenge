@@ -16,7 +16,7 @@ class Hospital(private val patients: List<Patient>) {
   fun runSimulation(drugs: List<Drug>): String {
     patients.forEach { it.treat(drugs) }
     return State.values().joinToString(",") {
-        it.statusCode + ":" + patients.filter { p -> p.state == it }.count()
+        it.code + ":" + patients.filter { p -> p.state == it }.count()
     }
   }
 
