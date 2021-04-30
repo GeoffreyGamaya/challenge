@@ -10,7 +10,7 @@ object Effect {
 
   var random = Random()
 
-  private var resurrectionRatio = 0.000001
+  private var RESURRECTION_RATIO = 0.000001
 
   val death = BiFunction { drugs: List<Drug>, state: State ->
     val newState = if (drugs.contains(PARACETAMOL) && drugs.contains(ASPIRIN) ||
@@ -35,7 +35,7 @@ object Effect {
     val newState = if (drugs.contains(ASPIRIN) && state == FEVER ||
         drugs.contains(PARACETAMOL) && state == FEVER ||
         drugs.contains(ANTIBIOTIC) && state == TUBERCULOSIS ||
-        state == DEAD && random.nextDouble() <= resurrectionRatio) {
+        state == DEAD && random.nextDouble() <= RESURRECTION_RATIO) {
       HEALTHY
     } else {
       state
